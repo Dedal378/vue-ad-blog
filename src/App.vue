@@ -1,15 +1,15 @@
 <template>
   <v-app id="inspire">
     <v-navigation-drawer
-            v-model="drawer"
-            app
+        v-model="drawer"
+        app
     >
       <v-list dense>
         <v-list-item
-                v-for="link of links"
-                :key="link.title"
-                :to="link.url"
-                link
+            v-for="link of links"
+            :key="link.title"
+            :to="link.url"
+            link
         >
           <v-list-item-action>
             <v-icon>{{link.icon}}</v-icon>
@@ -22,26 +22,28 @@
     </v-navigation-drawer>
 
     <v-app-bar
-            app
-            color="primary"
-            dark
+        app
+        color="primary"
+        dark
     >
       <v-app-bar-nav-icon
-              @click.stop="drawer = !drawer"
-              class="hidden-md-and-up"
+          @click.stop="drawer = !drawer"
+          class="hidden-md-and-up"
       />
       <v-toolbar-title>
-        <router-link to="/" tag="span" class="pointer">Ad Application</router-link>
+        <router-link to="/" tag="span" class="pointer">
+          Ad Application
+        </router-link>
       </v-toolbar-title>
       <v-spacer />
       <v-toolbar-items class="hidden-sm-and-down">
         <v-btn
-                color="primary"
-                dark
-                height="100%"
-                v-for="link of links"
-                :key="link.title"
-                :to="link.url"
+            v-for="link of links"
+            :key="link.title"
+            :to="link.url"
+            color="primary"
+            dark
+            height="100%"
         >
           <v-icon left>{{link.icon}}</v-icon>
           {{link.title}}
@@ -52,8 +54,8 @@
     <router-view />
 
     <v-footer
-            color="primary"
-            app
+        color="primary"
+        app
     >
     </v-footer>
   </v-app>
@@ -67,11 +69,11 @@
     data: () => ({
       drawer: null,
       links: [
-        { title: 'Login', icon: 'mdi-lock', url: '/login' },
-        { title: 'Registration', icon: 'mdi-face', url: '/registration' },
-        { title: 'Orders', icon: 'mdi-bookmark-outline', url: '/orders' },
-        { title: 'New ad', icon: 'mdi-file-plus', url: '/new' },
-        { title: 'My ads', icon: 'mdi-format-list-bulleted', url: '/list'}
+        {title: 'Login', icon: 'mdi-lock', url: '/login'},
+        {title: 'Registration', icon: 'mdi-face', url: '/registration'},
+        {title: 'Orders', icon: 'mdi-bookmark-outline', url: '/orders'},
+        {title: 'New ad', icon: 'mdi-file-plus', url: '/new'},
+        {title: 'My ads', icon: 'mdi-format-list-bulleted', url: '/list'}
       ]
     }),
   }
