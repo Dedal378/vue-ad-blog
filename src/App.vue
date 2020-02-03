@@ -42,7 +42,6 @@
             :key="link.title"
             :to="link.url"
             color="primary"
-            dark
             height="100%"
         >
           <v-icon left>{{link.icon}}</v-icon>

@@ -1,11 +1,13 @@
 <template>
-  <v-container>
-    <v-layout row>
-      <v-flex xs12>
-        <h1>Ad list</h1>
-      </v-flex>
-    </v-layout>
-  </v-container>
+  <v-content>
+    <v-container fluid>
+      <v-row>
+        <v-col>
+          <h1>Ad List</h1>
+        </v-col>
+      </v-row>
+    </v-container>
+  </v-content>
 </template>
 
 <script>

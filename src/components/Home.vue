@@ -1,40 +1,35 @@
 <template>
   <v-content>
-    <v-container
-        fluid
-        class="pt-0">
-      <v-layout row>
-        <v-flex>
-
-          <v-carousel
-              height="400px"
-              cycle
-              hide-delimiters
-              show-arrows-on-hover
-              :interval="5000"
-              :progress="true"
+    <v-container fluid class="pt-0">
+      <v-row>
+        <v-carousel
+            height="400px"
+            cycle
+            progress
+            hide-delimiters
+            :interval="5000"
+            show-arrows-on-hover
+        >
+          <v-carousel-item
+              v-for="ad in ads"
+              :key="ad.id"
+              :src="ad.imageSrc"
+              transition="scroll-x-reverse-transition"
           >
-            <v-carousel-item
-                v-for="ad in ads"
-                :key="ad.id"
-                :src="ad.imageSrc"
-                transition="scroll-x-reverse-transition"
-            >
-              <div class="car-link">
-                <v-btn class="primary" :to="'/ad/' + ad.id">
-                  {{ad.title}}
-                </v-btn>
-              </div>
-            </v-carousel-item>
-          </v-carousel>
+            <div class="car-link">
+              <v-btn class="error" :to="'/ad/' + ad.id">
+                {{ad.title}}
+              </v-btn>
+            </div>
+          </v-carousel-item>
+        </v-carousel>
 
-        </v-flex>
-      </v-layout>
+      </v-row>
     </v-container>
 
     <v-container>
-      <v-layout row>
-        <v-flex
+      <v-row>
+        <v-col
             v-for="ad of ads"
             :key="ad.id"
             :src="ad.imageSrc"
@@ -49,12 +44,8 @@
                 height="200px"
                 :src="ad.imageSrc"
             >
-              <v-card-title primary-title>
-              </v-card-title>
+              <v-card-title primary-title />
             </v-img>
-
-            <v-card-subtitle class="pb-0">
-            </v-card-subtitle>
 
             <v-card-text class="text--primary">
               <div>{{ad.title}}</div>
@@ -70,22 +61,19 @@
                 Open
               </v-btn>
 
-              <v-btn
-                  rasied class="primary"
-              >
+              <v-btn rasied class="error">
                 Buy
               </v-btn>
             </v-card-actions>
           </v-card>
-        </v-flex>
-      </v-layout>
+        </v-col>
+      </v-row>
     </v-container>
   </v-content>
 </template>
 
 <script>
   export default {
-    name: 'Home',
     data () {
       return {
         ads: [
@@ -131,7 +119,7 @@
     position: absolute;
     bottom: 50px;
     left: 50%;
-    background: rgba(0,0,0, .5);
+    background: rgba(25, 118, 210, 0.5);
     transform: translate(-50%, 70%);
     padding: 5px 15px;
     border-radius: 5px;

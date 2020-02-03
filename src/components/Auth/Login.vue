@@ -1,66 +1,64 @@
 <template>
-  <v-container
-      class="mt-12"
-      fluid
-  >
-    <v-row
-        align="center"
-        justify="center"
-    >
-      <v-col
-          sm="8"
-          md="6"
+  <v-content>
+    <v-container fluid>
+      <v-row
+          align="center"
+          justify="center"
       >
-        <v-card class="elevation-3">
-          <v-toolbar
-              color="primary"
-              dark
-              flat
-          >
-            <v-toolbar-title>Login form</v-toolbar-title>
-          </v-toolbar>
-          <v-card-text>
-            <v-form
-                ref="form"
-                v-model="valid"
-                lazy-validation
-            >
-              <v-text-field
-                  label="Email"
-                  name="email"
-                  prepend-icon="person"
-                  type="email"
-                  v-model="email"
-                  :rules="emailRules"
-              />
-
-              <v-text-field
-                  id="password"
-                  label="Password"
-                  name="password"
-                  prepend-icon="lock"
-                  type="password"
-                  v-model="password"
-                  :counter="6"
-                  :rules="passwordRules"
-              />
-            </v-form>
-          </v-card-text>
-          <v-card-actions>
-            <v-spacer />
-            <v-btn
+        <v-col
+            sm="8"
+            md="6"
+        >
+          <v-card class="elevation-3">
+            <v-toolbar
                 color="primary"
-                @click="onSubmit"
-                :disabled="!valid"
+                dark
+                flat
             >
-              Login
-            </v-btn>
-          </v-card-actions>
-        </v-card>
-      </v-col>
-    </v-row>
-  </v-container>
+              <v-toolbar-title>Login form</v-toolbar-title>
+            </v-toolbar>
+            <v-card-text>
+              <v-form
+                  ref="form"
+                  v-model="valid"
+                  lazy-validation
+              >
+                <v-text-field
+                    label="Email"
+                    name="email"
+                    prepend-icon="person"
+                    type="email"
+                    v-model="email"
+                    :rules="emailRules"
+                />
 
+                <v-text-field
+                    id="password"
+                    label="Password"
+                    name="password"
+                    prepend-icon="lock"
+                    type="password"
+                    v-model="password"
+                    :counter="6"
+                    :rules="passwordRules"
+                />
+              </v-form>
+            </v-card-text>
+            <v-card-actions>
+              <v-spacer />
+              <v-btn
+                  color="primary"
+                  @click="onSubmit"
+                  :disabled="!valid"
+              >
+                Login
+              </v-btn>
+            </v-card-actions>
+          </v-card>
+        </v-col>
+      </v-row>
+    </v-container>
+  </v-content>
 </template>
 
 <script>
@@ -86,7 +84,7 @@
           const user = {
             email: this.email,
             password: this.password ,
-          }
+          };
           console.log(user);
           // this.snackbar = true
         }
