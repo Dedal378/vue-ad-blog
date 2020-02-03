@@ -28,8 +28,8 @@ const routes = [
     component: AdList
   },
   {
-    path: '/newad',
-    name: 'newad',
+    path: '/new',
+    name: 'new',
     component: NewAd
   },
   {
