@@ -17,7 +17,7 @@
               transition="scroll-x-reverse-transition"
           >
             <div class="car-link">
-              <v-btn class="error" :to="'/ad/' + ad.id">
+              <v-btn class="warning" :to="'/ad/' + ad.id">
                 {{ad.title}}
               </v-btn>
             </div>
@@ -61,7 +61,7 @@
                 Open
               </v-btn>
 
-              <v-btn rasied class="error">
+              <v-btn rasied class="warning">
                 Buy
               </v-btn>
             </v-card-actions>
