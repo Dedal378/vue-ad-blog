@@ -3,16 +3,14 @@
     <v-container fluid>
       <v-row>
         <v-col>
-          <v-card
-              class="elevation-10 mb-3"
-          >
+          <v-card class="elevation-10 mb-3">
             <v-row>
 
               <v-col>
                 <v-img
                     class="white--text align-end"
                     height="300"
-                    src="https://picsum.photos/id/157/1200/800.webp"
+                    :src="ad.imageSrc"
                 >
                 </v-img>
               </v-col>
@@ -21,10 +19,9 @@
                   align-self="end"
                   class="d-flex flex-column"
               >
-                <v-card-title>Lorem</v-card-title>
+                <v-card-title>{{ad.title}}</v-card-title>
                 <v-card-subtitle class="text--primary">
-                  Lorem ipsum dolor sit amet, consectetur adipisicing elit. Explicabo, libero.
-                  <!-- /. -->
+                  {{ad.description}}
                 </v-card-subtitle>
 
                 <v-card-actions>
@@ -53,9 +50,13 @@
 
 <script>
   export default {
-    data () {
-      return {}
-    }
+    props: ['id'],
+    computed: {
+      ad () {
+        const id = this.id;
+        return this.$store.getters.adById(id);
+      }
+    },
   }
 </script>
 

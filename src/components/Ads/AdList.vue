@@ -8,7 +8,7 @@
           <v-container>
             <v-card
                 class="elevation-10 mb-3"
-                v-for="ad in ads"
+                v-for="ad in myAds"
                 :key="ad.id"
             >
               <div class="d-flex justify-space-between flex-wrap">
@@ -53,26 +53,11 @@
 
 <script>
   export default {
-    data () {
-      return {
-        ads: [
-          {
-            title: 'First ad',
-            description: 'Hello i am description',
-            promo: false,
-            imageSrc: 'https://picsum.photos/id/157/1200/800.webp',
-            id: '123'
-          },
-          {
-            title: 'Second ad',
-            description: 'Hello i am description',
-            promo: false,
-            imageSrc: 'https://picsum.photos/id/1081/1200/800.webp',
-            id: '123'
-          }
-        ]
+    computed: {
+      myAds () {
+        return this.$store.getters.myAds;
       }
-    }
+    },
   }
 </script>
 

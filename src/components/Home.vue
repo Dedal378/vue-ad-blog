@@ -11,7 +11,7 @@
             show-arrows-on-hover
         >
           <v-carousel-item
-              v-for="ad in ads"
+              v-for="ad in promoAds"
               :key="ad.id"
               :src="ad.imageSrc"
               transition="scroll-x-reverse-transition"
@@ -55,7 +55,7 @@
             <v-card-actions>
               <v-spacer />
               <v-btn
-                  flat
+                  text
                   :to="'/ad/'+ ad.id"
               >
                 Open
@@ -74,43 +74,14 @@
 
 <script>
   export default {
-    data () {
-      return {
-        ads: [
-          {
-            title: 'First ad',
-            description: 'Hello i am description',
-            promo: false,
-            imageSrc: 'https://picsum.photos/id/157/1200/800.webp',
-            id: '123'
-          },
-
-          {
-            title: 'Second ad',
-            description: 'Hello i am description',
-            promo: false,
-            imageSrc: 'https://picsum.photos/id/1081/1200/800.webp',
-            id: '123'
-          },
-
-          {
-            title: 'Third ad',
-            description: 'Hello i am description',
-            promo: false,
-            imageSrc: 'https://picsum.photos/id/1076/1200/800.webp',
-            id: '123'
-          },
-
-          {
-            title: 'Fourth ad',
-            description: 'Hello i am description',
-            promo: false,
-            imageSrc: 'https://picsum.photos/id/357/1200/800.webp',
-            id: '123'
-          },
-        ],
+    computed: {
+      promoAds () {
+        return this.$store.getters.promoAds;
+      },
+      ads () {
+        return this.$store.getters.ads;
       }
-    }
+    },
   }
 </script>
 

@@ -35,7 +35,7 @@
           <v-row>
             <v-col class="d-flex align-end">
               <img
-                  src="https://picsum.photos/id/157/1200/800.webp"
+                  :src="ad.imageSrc"
                   alt="">
             </v-col>
 
@@ -82,7 +82,6 @@
         description: '',
         promo: false,
         valid: false,
-
       }
     },
     methods: {
@@ -92,9 +91,11 @@
           const ad = {
             title: this.title,
             description: this.description,
-            promo: this.promo
-          }
-          console.log(ad)
+            promo: this.promo,
+            imageSrc: 'https://picsum.photos/id/260/1200/800.webp'
+          };
+
+          this.$store.dispatch('createdAd', ad)
         }
       }
     },
