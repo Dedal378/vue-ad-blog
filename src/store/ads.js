@@ -13,66 +13,83 @@ class Ad {
 
 export default {
   state: {
-    ads: [
-      {
-        title: 'First ad',
-        description: 'Hello i am description',
-        promo: false,
-        imageSrc: 'https://picsum.photos/id/157/1200/800.webp',
-        id: '1'
-      },
-
-      {
-        title: 'Second ad',
-        description: 'Hello i am description',
-        promo: true,
-        imageSrc: 'https://picsum.photos/id/1081/1200/800.webp',
-        id: '2'
-      },
-
-      {
-        title: 'Third ad',
-        description: 'Hello i am description',
-        promo: true,
-        imageSrc: 'https://picsum.photos/id/1076/1200/800.webp',
-        id: '3'
-      },
-
-      {
-        title: 'Fourth ad',
-        description: 'Hello i am description',
-        promo: true,
-        imageSrc: 'https://picsum.photos/id/357/1200/800.webp',
-        id: '4'
-      },
-    ]
+    ads: []
   },
   mutations: {
-    createdAd (state, payload) {
+    createAd (state, payload) {
       state.ads.push(payload)
+    },
+    loadAds (state, payload) {
+      state.ads = payload
     }
   },
   actions: {
-    async createdAd ({commit, getters}, payload) {
-      commit('clearErorr');
+    async createAd ({commit, getters}, payload) {
+      commit('clearError');
       commit('setLoading', true);
+
+      const image = payload.image;
 
       try {
         const newAd = new Ad(
           payload.title,
           payload.description,
           getters.user.id,
-          payload.imageSrc,
+          '',
           payload.promo
         );
 
         const ad = await fb.database().ref('ads').push(newAd);
+        const imageExt = image.name.slice(image.name.lastIndexOf('.'));
+
+        const fileData = await fb.storage().ref(`ads/${ad.key}.${imageExt}`).put(image);
+        // const imageSrc = fileData.metadata.downloadURLs[0];
+
+        const imageSrc = await fb.storage().ref().child(fileData.ref.fullPath).getDownloadURL();
+
+        await fb.database().ref('ads').child(ad.key).update({
+          imageSrc
+        });
 
         commit('setLoading', false);
-        commit('createAd',  {
+        commit('createAd', {
           ...newAd,
-          id: ad.key
+          id: ad.key,
+          imageSrc: imageSrc // меняем imageSrc на imageSrc, кот. получили с сервера
         })
+      } catch (error) {
+        commit('setError', error.message);
+        commit('setLoading', false);
+        throw error
+      }
+    },
+    async fetchAds ({commit}) {
+      commit('clearError');
+      commit('setLoading', true);
+
+      const resultAds = [];
+
+      try {
+
+        const fbVal = await fb.database().ref('ads').once('value');
+        const ads = fbVal.val();
+
+        Object.keys(ads).forEach(key => {
+          const ad = ads[key]
+          resultAds.push(
+            new Ad(
+              ad.title,
+              ad.description,
+              ad.ownerId,
+              ad.imageSrc,
+              ad.promo,
+              key
+            )
+          )
+        });
+
+        commit('loadAds', resultAds);
+        commit('setLoading', false)
 
       } catch (error) {
         commit('setError', error.message);
@@ -93,6 +110,11 @@ export default {
     myAds (state) {
       return state.ads
     },
+/*    myAds (state, getters) {
+      return state.ads.filter(ad => {
+        return ad.ownerId === getters.user.id
+      })
+    },*/
     adById (state) {
       return adId => {
         return state.ads.find(ad => ad.id === adId)
@@ -100,4 +122,3 @@ export default {
     }
   }
 }
-

@@ -11,7 +11,6 @@ new Vue({
   router,
   store,
   vuetify,
-  render: h => h(App),
   created () {
     fb.initializeApp({
       apiKey: 'AIzaSyC2Uvidr8XvmbRNQK3aMYLKAqD1exez81g',
@@ -27,6 +26,9 @@ new Vue({
       if (user) {
         this.$store.dispatch('autoLoginUser', user)
       }
-    })
-  }
+    });
+
+    this.$store.dispatch('fetchAds')
+  },
+  render: h => h(App)
 }).$mount('#app');

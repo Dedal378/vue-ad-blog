@@ -1,15 +1,15 @@
 <template>
   <v-app id="inspire">
     <v-navigation-drawer
-        v-model="drawer"
         app
+        v-model="drawer"
     >
       <v-list dense>
         <v-list-item
-            v-for="link of links"
             :key="link.title"
             :to="link.url"
             link
+            v-for="link of links"
         >
           <v-list-item-action>
             <v-icon>{{link.icon}}</v-icon>
@@ -20,16 +20,16 @@
         </v-list-item>
       </v-list>
       <v-list-item
-            @click="onLogout"
-            v-if="isUserLoggedIn"
-        >
-          <v-list-item-action>
-            <v-icon>mdi-exit-to-app</v-icon>
-          </v-list-item-action>
-          <v-list-item-content>
-            <v-list-item-title v-text="'Logout'" />
-          </v-list-item-content>
-        </v-list-item>
+          @click="onLogout"
+          v-if="isUserLoggedIn"
+      >
+        <v-list-item-action>
+          <v-icon>mdi-exit-to-app</v-icon>
+        </v-list-item-action>
+        <v-list-item-content>
+          <v-list-item-title v-text="'Logout'" />
+        </v-list-item-content>
+      </v-list-item>
     </v-navigation-drawer>
 
     <v-app-bar
@@ -42,26 +42,30 @@
           class="hidden-md-and-up"
       />
       <v-toolbar-title>
-        <router-link to="/" tag="span" class="pointer">
+        <router-link
+            class="pointer"
+            tag="span"
+            to="/">
           Ad Application
         </router-link>
       </v-toolbar-title>
       <v-spacer />
-      <v-toolbar-items class="hidden-sm-and-down">
+      <v-toolbar-items
+          class="hidden-sm-and-down">
         <v-btn
-            v-for="link of links"
             :key="link.title"
             :to="link.url"
             color="primary"
             height="100%"
+            v-for="link of links"
         >
           <v-icon left>{{link.icon}}</v-icon>
           {{link.title}}
         </v-btn>
         <v-btn
-           text
-           @click="onLogout"
-           v-if="isUserLoggedIn"
+            text
+            @click="onLogout"
+            v-if="isUserLoggedIn"
         >
           <v-icon left>mdi-exit-to-app</v-icon>
           Logout
@@ -73,17 +77,17 @@
 
     <template v-if="error">
       <v-snackbar
-          color="error"
-          :multi-line="mode === 'multi-line'"
-          :timeout="7000"
-          @input="closeError"
+          :timeout="10000"
           :value="true"
+          @input="closeError"
+          color="error"
+          multi-line
       >
         {{error}}
         <v-btn
+            @click="closeError"
             dark
             text
-            @click="closeError"
         >
           Close
         </v-btn>
@@ -91,8 +95,8 @@
     </template>
 
     <v-footer
-        color="primary"
         app
+        color="primary"
     >
     </v-footer>
   </v-app>
@@ -100,9 +104,11 @@
 
 <script>
   export default {
-    data: () => ({
-      drawer: false
-    }),
+    data () {
+      return {
+        drawer: false
+      }
+    },
     computed: {
       error () {
         return this.$store.getters.error;
@@ -140,5 +146,4 @@
   .pointer {
     cursor: pointer;
   }
-
 </style>

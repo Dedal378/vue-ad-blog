@@ -9,49 +9,67 @@
             md="6"
         >
           <h1 class="text--secondary mb-3">Create new ad</h1>
+
           <v-form
               ref="form"
               v-model="valid"
               validation
           >
             <v-text-field
+                :rules="[v => !!v || 'Title is required']"
                 label="Ad title"
                 name="title"
-                v-model="title"
-                type="text"
                 required
-                :rules="[v => !!v || 'Ttile is required']"
+                type="text"
+                v-model="title"
             />
 
             <v-textarea
+                :rules="[v => !!v || 'Description is required']"
+                auto-grow
                 label="Ad description"
                 name="description"
-                v-model="description"
                 type="textarea"
-                auto-grow
-                :rules="[v => !!v || 'Description is required']"
+                v-model="description"
             />
           </v-form>
           <v-row>
             <v-col class="d-flex align-end">
               <img
-                  :src="ad.imageSrc"
-                  alt="">
+                  :src="imageSrc"
+                  v-if="imageSrc"
+                  alt="image"
+              >
             </v-col>
 
             <v-col>
-              <v-btn class="warning col">
+              <v-btn
+                  @click="triggerUpload"
+                  class="warning col"
+              >
                 Upload
                 <v-icon right dark>mdi-cloud-upload</v-icon>
               </v-btn>
+              <!--
+                TODO
+                исправить возможность принимать любые картинки
+                не только webp
+                accept="image/vnd.wap.wbmp"
+              -->
+              <input
+                  @change="onFileChange"
+                  accept="image/vnd.wap.wbmp"
+                  ref="fileInput"
+                  style="display: none;"
+                  type="file">
             </v-col>
           </v-row>
 
           <v-row>
             <v-switch
-                v-model="promo"
                 color="warning"
                 label="Add to promo?"
+                v-model="promo"
             ></v-switch>
           </v-row>
 
@@ -59,7 +77,8 @@
             <v-col>
               <v-spacer></v-spacer>
               <v-btn
-                  :disabled="!valid"
+                  :disabled="(!valid && !this.image) || loading"
+                  :loading="loading"
                   @click="createAd"
                   class="success col"
               >
@@ -82,21 +101,47 @@
         description: '',
         promo: false,
         valid: false,
+        image: null,
+        imageSrc: ''
+      }
+    },
+    computed: {
+      loading () {
+        return this.$store.getters.loading;
       }
     },
     methods: {
       createAd () {
-        if (this.$refs.form.validate()) {
-          // logic
+        if (this.$refs.form.validate() && this.image) {
           const ad = {
             title: this.title,
             description: this.description,
+            ownerId: null,
             promo: this.promo,
-            imageSrc: 'https://picsum.photos/id/260/1200/800.webp'
+            image: this.image
           };
 
-          this.$store.dispatch('createdAd', ad)
+          this.$store.dispatch('createAd', ad)
+            .then(() => {
+              this.$router.push('/list')
+            })
+            .catch(() => {
+            })
         }
+      },
+      onFileChange (event) {
+        const file = event.target.files[0];
+
+        const reader = new FileReader();
+        // eslint-disable-next-line no-unused-vars
+        reader.onload = e => {
+          this.imageSrc = reader.result
+        };
+        reader.readAsDataURL(file);
+        this.image = file
+      },
+      triggerUpload () {
+        this.$refs.fileInput.click()
       }
     },
   }

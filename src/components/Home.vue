@@ -1,5 +1,5 @@
 <template>
-  <v-content>
+  <v-content v-if="!loading">
     <v-container fluid class="pt-0">
       <v-row>
         <v-carousel
@@ -23,7 +23,6 @@
             </div>
           </v-carousel-item>
         </v-carousel>
-
       </v-row>
     </v-container>
 
@@ -66,10 +65,30 @@
               </v-btn>
             </v-card-actions>
           </v-card>
+
+        </v-col>
+      </v-row>
+    </v-container>
+
+  </v-content>
+
+  <v-content v-else>
+    <v-container>
+      <v-row>
+        <v-col class="text-sm-center pt-12">
+          <v-progress-circular
+              indeterminate
+              :rotate="50"
+              :size="100"
+              :value="100"
+              :width="10"
+              color="light-blue"
+          ></v-progress-circular>
         </v-col>
       </v-row>
     </v-container>
   </v-content>
+
 </template>
 
 <script>
@@ -80,6 +99,9 @@
       },
       ads () {
         return this.$store.getters.ads;
+      },
+      loading () {
+        return this.$store.getters.loading
       }
     },
   }

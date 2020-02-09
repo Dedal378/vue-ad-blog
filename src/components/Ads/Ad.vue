@@ -8,9 +8,9 @@
 
               <v-col>
                 <v-img
+                    :src="ad.imageSrc"
                     class="white--text align-end"
                     height="300"
-                    :src="ad.imageSrc"
                 >
                 </v-img>
               </v-col>
@@ -19,7 +19,9 @@
                   align-self="end"
                   class="d-flex flex-column"
               >
-                <v-card-title>{{ad.title}}</v-card-title>
+                <v-card-title>
+                  {{ad.title}}
+                </v-card-title>
                 <v-card-subtitle class="text--primary">
                   {{ad.description}}
                 </v-card-subtitle>
