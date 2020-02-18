@@ -53,16 +53,8 @@
 
             <v-card-actions>
               <v-spacer />
-              <v-btn
-                  text
-                  :to="'/ad/'+ ad.id"
-              >
-                Open
-              </v-btn>
-
-              <v-btn rasied class="warning">
-                Buy
-              </v-btn>
+              <v-btn text :to="'/ad/'+ ad.id" class="mr-3">Open</v-btn>
+              <app-buy-modal :ad="ad"></app-buy-modal>
             </v-card-actions>
           </v-card>
 

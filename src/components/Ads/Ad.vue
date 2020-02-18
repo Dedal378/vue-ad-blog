@@ -3,7 +3,9 @@
     <v-container fluid>
       <v-row>
         <v-col>
-          <v-card class="elevation-10 mb-3">
+          <v-card
+              v-if="!loading"
+              class="elevation-10 mb-3">
             <v-row>
 
               <v-col>
@@ -28,22 +30,24 @@
 
                 <v-card-actions>
                   <v-spacer />
-                  <v-btn
-                      color="warning"
-                      depressed
-                  >
-                    Edit
-                  </v-btn>
-                  <v-btn
-                      color="success"
-                  >
-                    Buy
-                  </v-btn>
+                  <app-edit-ad-modal :ad="ad" v-if="isOwner" />
+                  <app-buy-modal :ad="ad" />
                 </v-card-actions>
               </v-col>
 
             </v-row>
           </v-card>
+          <div v-else class="text-sm-center">
+            <v-progress-circular
+                indeterminate
+                :rotate="50"
+                :size="100"
+                :value="100"
+                :width="10"
+                color="light-blue"
+            ></v-progress-circular>
+          </div>
+
         </v-col>
       </v-row>
     </v-container>
@@ -51,14 +55,26 @@
 </template>
 
 <script>
+
+  import EditAdModal from './EditAdModal';
+
   export default {
     props: ['id'],
     computed: {
       ad () {
         const id = this.id;
         return this.$store.getters.adById(id);
+      },
+      loading () {
+        return this.$store.getters.loading
+      },
+      isOwner () {
+        return this.ad.ownerId === this.$store.getters.user.id
       }
     },
+    components: {
+      appEditAdModal: EditAdModal,
+    }
   }
 </script>
 

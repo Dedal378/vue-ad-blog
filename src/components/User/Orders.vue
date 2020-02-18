@@ -1,12 +1,23 @@
 <template>
   <v-content>
     <v-container>
-      <v-row
-          align-content="center"
-          justify="center">
-        <v-col sm="6">
+      <v-row align-content="center" justify="center">
 
-          <h1 class="text--secondary mb-3">Orders</h1>
+        <v-col v-if="loading" class="text-sm-center">
+          <v-progress-circular
+              indeterminate
+              :rotate="50"
+              :size="100"
+              :value="100"
+              :width="10"
+              color="light-blue"
+          ></v-progress-circular>
+        </v-col>
+
+        <v-col v-else-if="!loading && orders.length !== 0" sm="6">
+          <h1 class="text--secondary mb-3">
+            Orders
+          </h1>
 
           <v-list-item-group>
             <v-list-item
@@ -14,6 +25,7 @@
                 :key="order.id"
             >
               <v-list-item-action>
+                <!-- TODO неправильно срабатывает событие -->
                 <v-checkbox
                     :input-value="order.done"
                     @change="markDone(order)"
@@ -30,39 +42,47 @@
                 <v-btn
                     :to="/ad/ + order.adId"
                     class="primary"
-                >Open
+                >
+                  Open
                 </v-btn>
               </v-list-item-action>
 
             </v-list-item>
           </v-list-item-group>
-
         </v-col>
+
+        <v-col v-else class="text-sm-center">
+          <h1>
+            You have no orders
+          </h1>
+        </v-col>
+
       </v-row>
     </v-container>
   </v-content>
-
 </template>
 
 <script>
   export default {
-    data () {
-      return {
-        orders: [
-          {
-            id: 'sdcasd3',
-            name: 'Sasha',
-            phone: '8-987-122-33-44',
-            adId: '1',
-            done: false,
-          }
-        ]
+    computed: {
+      loading () {
+        return this.$store.getters.loading;
+      },
+      orders () {
+        return this.$store.getters.orders
       }
     },
     methods: {
       markDone (order) {
-        order.done = true
+        this.$store.dispatch('markOrderDone', order.id)
+        .then(() => {
+          order.done = true
+        })
+        .catch(() => {})
       }
+    },
+    created () {
+      this.$store.dispatch('fetchOrders')
     }
   }
 </script>

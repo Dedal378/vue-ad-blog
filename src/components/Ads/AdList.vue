@@ -1,7 +1,10 @@
 <template>
   <v-content>
     <v-container fluid>
-      <v-row align-content="center" justify="center">
+      <v-row
+          v-if="!loading && myAds.length !== 0"
+          align-content="center"
+          justify="center">
         <v-col sm="10" md="8" lg="7">
           <h1 class="text--secondary mb-3">My ads</h1>
 
@@ -47,6 +50,25 @@
 
         </v-col>
       </v-row>
+      <v-row v-else-if="!loading && myAds.length === 0">
+        <v-col class="text-sm-center">
+          <h1 class="text--primary">
+            You have no ads
+          </h1>
+        </v-col>
+      </v-row>
+      <v-row v-else>
+        <v-col class="text-sm-center">
+          <v-progress-circular
+              indeterminate
+              :rotate="50"
+              :size="100"
+              :value="100"
+              :width="10"
+              color="light-blue"
+          ></v-progress-circular>
+        </v-col>
+      </v-row>
     </v-container>
   </v-content>
 </template>
@@ -56,6 +78,9 @@
     computed: {
       myAds () {
         return this.$store.getters.myAds;
+      },
+      loading () {
+        return this.$store.getters.loading
       }
     },
   }
