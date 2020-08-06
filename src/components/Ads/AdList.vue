@@ -60,12 +60,12 @@
       <v-row v-else>
         <v-col class="text-sm-center">
           <v-progress-circular
-              indeterminate
               :rotate="50"
               :size="100"
               :value="100"
               :width="10"
               color="light-blue"
+              indeterminate
           ></v-progress-circular>
         </v-col>
       </v-row>

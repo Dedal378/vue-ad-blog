@@ -96,7 +96,7 @@ export default {
         });
 
         commit('loadAds', resultAds);
-        commit('setLoading', false)
+        commit('setLoading', false);
 
       } catch (error) {
         commit('setError', error.message);
@@ -137,11 +137,6 @@ export default {
         return ad.ownerId === getters.user.id
       })
     },
-/*    myAds (state, getters) {
-      return state.ads.filter(ad => {
-        return ad.ownerId === getters.user.id
-      })
-    },*/
     adById (state) {
       return adId => {
         return state.ads.find(ad => ad.id === adId)

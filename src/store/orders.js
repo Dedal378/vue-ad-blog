@@ -1,10 +1,11 @@
 import * as fb from 'firebase';
 
 class Order {
-  constructor (name, phone, adId, done = false, id = null) {
+  constructor (name, phone, adId, ownerId, done = false, id = null) {
     this.name = name;
     this.phone = phone;
     this.adId = adId;
+    this.ownerId = ownerId;
     this.done = done;
     this.id = id;
   }
@@ -45,15 +46,17 @@ export default {
         Object.keys(orders).forEach(key => {
           const order = orders[key];
           resultOrders.push(
-            new Order(order.name, order.phone, order.adId, order.done, key)
+            new Order(order.name, order.phone, order.adId, order.ownerId, order.done, key)
           )
         });
 
-        commit('loadOrder', resultOrders);
+        commit('loadOrders', resultOrders);
         commit('setLoading', false);
-      } catch (error) {
+      }
+      catch (error) {
         commit('setLoading', false);
         commit('setError', error.message);
+        console.log(getters);
         throw error
       }
     },
@@ -65,7 +68,7 @@ export default {
           done: true
         })
       } catch (error) {
-        commit('setError', error.message)
+        commit('setError', error.message);
         throw error
       }
     }

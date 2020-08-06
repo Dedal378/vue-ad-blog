@@ -20,39 +20,39 @@
             </v-toolbar>
             <v-card-text>
               <v-form
+                  lazy-validation
                   ref="form"
                   v-model="valid"
-                  lazy-validation
               >
                 <v-text-field
+                    :rules="emailRules"
                     label="Email"
                     name="email"
                     prepend-icon="person"
                     type="email"
                     v-model="email"
-                    :rules="emailRules"
                 />
 
                 <v-text-field
+                    :counter="6"
+                    :rules="passwordRules"
                     id="password"
                     label="Password"
                     name="password"
                     prepend-icon="lock"
                     type="password"
                     v-model="password"
-                    :counter="6"
-                    :rules="passwordRules"
                 />
 
                 <v-text-field
+                    :counter="6"
+                    :rules="confirmPasswordRules"
                     id="confirmPassword"
                     label="Confirm Password"
                     name="confirm-password"
                     prepend-icon="lock"
                     type="password"
                     v-model="confirmPassword"
-                    :counter="6"
-                    :rules="confirmPasswordRules"
                 />
               </v-form>
             </v-card-text>
