@@ -53,7 +53,6 @@
         </v-col>
       </v-row>
     </v-card>
-
   </v-dialog>
 </template>
 
@@ -63,8 +62,8 @@
     data () {
       return {
         modal: false,
-        editedDescription: this.ad.description,
         editedTitle: this.ad.title,
+        editedDescription: this.ad.description,
       }
     },
     methods: {

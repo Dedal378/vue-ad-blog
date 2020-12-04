@@ -74,14 +74,17 @@
 </template>
 
 <script>
+  import { mapGetters } from "vuex";
+
   export default {
     computed: {
-      myAds () {
+      ...mapGetters(['myAds', 'loading']),
+/*      myAds () {
         return this.$store.getters.myAds;
       },
       loading () {
         return this.$store.getters.loading
-      }
+      }*/
     },
   }
 </script>

@@ -61,7 +61,8 @@
                   accept="image/vnd.wap.wbmp"
                   ref="fileInput"
                   style="display: none;"
-                  type="file">
+                  type="file"
+              >
             </v-col>
           </v-row>
 

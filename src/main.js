@@ -2,10 +2,10 @@ import Vue from 'vue'
 import App from './App.vue'
 import router from './router'
 import store from './store'
-import Vuetify from 'vuetify';
-import BuyModal from "@/components/Shared/BuyModal";
-import * as fb from 'firebase';
-import vuetify from './plugins/vuetify';
+import Vuetify from 'vuetify'
+import BuyModal from "@/components/Shared/BuyModal"
+import * as fb from 'firebase'
+import vuetify from './plugins/vuetify'
 
 Vue.use(Vuetify);
 Vue.component('app-buy-modal', BuyModal)
@@ -18,6 +18,13 @@ new Vue({
   created () {
     fb.initializeApp({
     // config firebase
+      apiKey: "AIzaSyC2Uvidr8XvmbRNQK3aMYLKAqD1exez81g",
+      authDomain: "itc-ads-6108a.firebaseapp.com",
+      databaseURL: "https://itc-ads-6108a.firebaseio.com",
+      projectId: "itc-ads-6108a",
+      storageBucket: "itc-ads-6108a.appspot.com",
+      messagingSenderId: "449575624094",
+      appId: "1:449575624094:web:20ba93c89f063bbb370a8f"
     });
 
     fb.auth().onAuthStateChanged(user => {
@@ -29,4 +36,4 @@ new Vue({
     this.$store.dispatch('fetchAds')
   },
   render: h => h(App)
-}).$mount('#app');
+}).$mount('#app')

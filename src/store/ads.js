@@ -22,8 +22,8 @@ export default {
     loadAds (state, payload) {
       state.ads = payload
     },
-    updateAd (state, {title, description, id}) {
-      const ad = this.state.ad.find(a => {
+    updateAd (state, { title, description, id }) {
+      const ad = this.state.ads.find(a => {
         return a.id === id
       });
 
@@ -32,7 +32,7 @@ export default {
     }
   },
   actions: {
-    async createAd ({commit, getters}, payload) {
+    async createAd ({ commit, getters }, payload) {
       commit('clearError');
       commit('setLoading', true);
 
@@ -50,7 +50,7 @@ export default {
         const ad = await fb.database().ref('ads').push(newAd);
         const imageExt = image.name.slice(image.name.lastIndexOf('.'));
 
-        const fileData = await fb.storage().ref(`ads/${ad.key}.${imageExt}`).put(image);
+        const fileData = await fb.storage().ref(`ads/${ ad.key }.${ imageExt }`).put(image);
 
         const imageSrc = await fb.storage().ref().child(fileData.ref.fullPath).getDownloadURL();
 
@@ -70,7 +70,7 @@ export default {
         throw error
       }
     },
-    async fetchAds ({commit}) {
+    async fetchAds ({ commit }) {
       commit('clearError');
       commit('setLoading', true);
 
@@ -104,7 +104,7 @@ export default {
         throw error
       }
     },
-    async updateAd ({commit}, {title, description, id}) {
+    async updateAd ({ commit }, { title, description, id }) {
       commit('clearError');
       commit('setLoading', true);
 
@@ -128,19 +128,13 @@ export default {
       return state.ads
     },
     promoAds (state) {
-      return state.ads.filter(ad => {
-        return ad.promo
-      })
+      return state.ads.filter(ad => ad.promo)
     },
     myAds (state, getters) {
-      return state.ads.filter(ad => {
-        return ad.ownerId === getters.user.id
-      })
+      return state.ads.filter(ad => ad.ownerId === getters.user.id)
     },
     adById (state) {
-      return adId => {
-        return state.ads.find(ad => ad.id === adId)
-      }
+      return adId => state.ads.find(ad => ad.id === adId)
     }
   }
 }
