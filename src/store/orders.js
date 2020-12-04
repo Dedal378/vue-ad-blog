@@ -56,7 +56,6 @@ export default {
       catch (error) {
         commit('setLoading', false);
         commit('setError', error.message);
-        console.log(getters);
         throw error
       }
     },
